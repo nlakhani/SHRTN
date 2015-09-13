@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var words = [];
     var linknum = 0;
     var processedLinks = [];
+    var linkDict = {};
 
     chrome.windows.getAll({populate:true},function(windows){
       windows.forEach(function(window){
@@ -22,11 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
           /// links.push(tab.url);
           /// console.log(tab.url);
-          ///using the url extract the text
+          /// using the url extract the text
 
-          if (tab.url.slice(12,28) == 'lifetechnologies') {
+          if (tab.url.slice(12,28) == 'thermofisher.com') {
             var retrievedContent = contentGet(tab.url);
-            var retriedContentJSON = JSON.parse(retrievedContent);
+            var retrievedContentJSON = JSON.parse(retrievedContent);
 
             linknum = linknum + 1;
 
@@ -52,21 +53,24 @@ document.addEventListener('DOMContentLoaded', function() {
               'summary': contentSummary,
               'linkID': linknum
               };
-
           }
-          /// list of all the processed links
+
+          /// List of all the processed links
           processedLinks.push(linkDict);
-          /// generate the html for display
-          HTMLGenerate(processedLinks);
-          /// store the processed links
-          tabStorage(processedLinks);
-          ///make the list
+
+          /// Generate the html for display
+          /// HTMLGenerate(processedLinks);
+
+          /// Make the list
           makeList(tab.title);
-          /// close selected tabs
-          /// open summary page in browser
+
+          /// Close selected tabs
+          /// Open summary page in browser
         });
       });
     });
+    /// Store the processed links
+    tabStorage(processedLinks);
  });
 });
 
@@ -130,7 +134,7 @@ function showList(tablist){
     node.appendChild(textnode);
     document.getElementById("demo").appendChild(node);
     node.appendChild(listItemCheckbox);
-}
+  }
 }
 
 function makeList(taburl){
